@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
 {
     protected $table = 'subjects';
+    protected $fillable = ['subject'];
+
+    public function chapters()
+    {
+        return $this->belongsToMany(Chapter::class, 'subject_chapter');
+    }
 }

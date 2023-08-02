@@ -25,6 +25,23 @@ class ChapterController extends Controller
 
         return redirect()->route('chapters.index')->with('success', 'Chapter added successfully!');
     }
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'chapter' => 'required|string|max:255'
+        ]);
+
+        $chapter = chapter::findOrFail($id);
+        $chapter->update($request->all());
+        return redirect()->route('chapters.index')->with('success', 'Chapter updated successfully');
+    }
+
+    public function destroy($id)
+    {
+        $standard = Chapter::findOrFail($id);
+        $standard->delete();
+        return redirect()->route('chapters.index')->with('success', 'Standard deleted successfully');
+    }
 
 
 }

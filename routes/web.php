@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\StandardController;
+use App\Http\Controllers\AssignChapterController;
+use App\Http\Controllers\AssignStudentController;
+use App\Http\Controllers\AssignSubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +46,23 @@ Route::post('/chapters', [ChapterController::class,'store'])->name('chapters.sto
 Route::post('/chapters/edit/{id}', [ChapterController::class,'update'])->name('chapters.update');
 Route::post('/chapters/delete/{id}', [ChapterController::class,'destroy'])->name('chapters.destroy');
 
+// Standards routes
+Route::get('/standards', [StandardController::class, 'index'])->name('standards.index');
+Route::post('/standards', [StandardController::class, 'store'])->name('standards.store');
+Route::post('/standards/edit/{id}', [StandardController::class, 'update'])->name('standards.update');
+Route::post('/standards/delete/{id}', [StandardController::class, 'destroy'])->name('standards.destroy');
+
+
+Route::get('/assign_chapters', [AssignChapterController::class, 'index'])->name('assign_chapters');
+Route::post('/assign_chapters', [AssignChapterController::class, 'assign'])->name('assign_chapters.submit');
+
+
+Route::get('/assign_subjects', [AssignSubjectController::class, 'index'])->name('assign_subjects');
+Route::post('/assign_subjects', [AssignSubjectController::class, 'assign'])->name('assign_subjects.submit');
+
+
+Route::get('/assign_students', [AssignStudentController::class, 'index'])->name('assign_students');
+Route::post('/assign_students', [AssignStudentController::class, 'assign'])->name('assign_students.submit');
 
 
 
@@ -65,18 +86,6 @@ Route::post('/chapters/delete/{id}', [ChapterController::class,'destroy'])->name
 
 
 
-
-// Route::get('/add_subject', [SubjectController::class, 'index'])->name('add_subject');
-// Route::get('/add_stand', [SubjectController::class, 'stand'])->name('add_standard');
-// Route::post('/add_subjecy', [SubjectController::class, 'store'])->name('assign_chapter');
-// Route::post('/add_subct', [SubjectController::class, 'store'])->name('add_chapter');
-// Route::post('/add_subjct', [SubjectController::class, 'store'])->name('assign_subject');
-// Route::post('/add_sbject', [SubjectController::class, 'store'])->name('assign_students');
-// Route::post('/add_suject', [SubjectController::class, 'store'])->name('view_subjects');
-// Route::post('/add_subject', [SubjectController::class, 'store'])->name('view_chapters');
-// Route::post('/add_ubject', [SubjectController::class, 'store'])->name('view_standards');
-// Route::put('/add_subject/{id}', [SubjectController::class, 'update'])->name('update_subject');
-// Route::delete('/add_subject/{id}', [SubjectController::class, 'destroy'])->name('delete_subject');
 
 
 

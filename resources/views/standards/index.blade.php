@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'List All Subjects')
+@section('title', 'List All Standard')
 
 @section('content')
 <div class="header">
     <div class="profile">
-        <h3>List All subjects</h3>
+        <h3>List All Standard</h3>
     </div>
     <div class="menu">
         <form action="{{ route('dashboard') }}" method="head">
@@ -15,32 +15,32 @@
     </div>
 </div>
 
-@if($subjects->count() > 0)
+@if($standards->count() > 0)
 <div class="section">
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Chapter</th>
+                <th>Standard</th>
                 <th>Update Data</th>
                 <th>Delete</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($subjects as $subject)
+            @foreach($standards as $standard)
             <tr>
-                <td>{{ $subject->id }}</td>
-                <td>{{ $subject->subject }}</td>
+                <td>{{ $standard->id }}</td>
+                <td>{{ $standard->standard }}</td>
                 <td>
-                    <form action="{{ route('subjects.update', $subject->id) }}" method="post">
+                    <form action="{{ route('standards.update', $standard->id) }}" method="post">
                         @csrf
                         @method('post')
-                        <input type="text" name="subject" value="{{ $subject->subject }}" required>
+                        <input type="text" name="standard" value="{{ $standard->standard }}" required>
                         <button type="submit">Edit</button>
                     </form>
                 </td>
                 <td>
-                    <form action="{{ route('subjects.destroy', $subject->id) }}" method="post">
+                    <form action="{{ route('standards.destroy', $standard->id) }}" method="post">
                         @csrf
                         @method('post')
                         <button type="submit">Delete</button>
@@ -58,11 +58,11 @@
 @endif
 
 <div class="container">
-    <h1>Add subject</h1>
-    <form method="POST" action="{{ route('subjects.store') }}">
+    <h1>Add standard</h1>
+    <form method="POST" action="{{ route('standards.store') }}">
         @csrf
-        <label>subject:</label><br>
-        <input type="text" name="subject" required><br><br>
+        <label>standard:</label><br>
+        <input type="text" name="standard" required><br><br>
         <button type="submit">Add</button>
     </form>
 </div>
