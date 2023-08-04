@@ -77,8 +77,9 @@
         function toggleRegistrationForm() {
             var registrationForm = document.getElementById("registration-form");
             var registerButton = document.getElementById("register-button");
+            var computedStyle = window.getComputedStyle(registrationForm);
 
-            if (registrationForm.style.display === "none") {
+            if (computedStyle.display === "none") {
                 registrationForm.style.display = "block";
                 registerButton.textContent = "Cancel";
             } else {
