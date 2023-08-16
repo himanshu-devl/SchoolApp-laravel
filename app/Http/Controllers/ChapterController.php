@@ -43,5 +43,13 @@ class ChapterController extends Controller
         return redirect()->route('chapters.index')->with('success', 'Standard deleted successfully');
     }
 
+    public function viewChapters()
+    {
+        $role = session('role');
+        $chapters = Chapter::all(); // Assuming you have an Eloquent model for chapters
+
+        return view('view_chapters', compact('role', 'chapters'));
+    }
+
 
 }

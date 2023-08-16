@@ -27,14 +27,12 @@ Route::post('/login', [AccessController::class, 'login'])->name('login.submit');
 
 Route::post('/register', [AccessController::class, 'register'])->name('register.submit');
 
-Route::get('/dashboard', function(){
-    return view('dashboard');
-})->name('dashboard');
 
-Route::get('/logout', [AccessController::class, 'logout'])->name('logout');
-
-
-
+// Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function(){
+        return view('dashboard');
+    })->name('dashboard');
+    Route::get('/logout', [AccessController::class, 'logout'])->name('logout');
 Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects.index');
 Route::post('/subjects', [SubjectController::class,'store'])->name('subjects.store');
 Route::post('/subjects/edit/{id}', [SubjectController::class ,'update'])->name('subjects.update');
@@ -65,27 +63,10 @@ Route::get('/assign_students', [AssignStudentController::class, 'index'])->name(
 Route::post('/assign_students', [AssignStudentController::class, 'assign'])->name('assign_students.submit');
 
 
+Route::get('/view_chapters', [ChapterController::class, 'viewChapters'])->name('view_chapters');
 
+Route::get('/view_subjects', [SubjectController::class, 'viewSubjects'])->name('view_subjects');
 
+Route::get('/view_standards', [StandardController::class, 'viewStandards'])->name('view_standards');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// });

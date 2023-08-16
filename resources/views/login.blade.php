@@ -121,12 +121,12 @@
             </form>
         </div>
 
-  
+
          @if(session('registration_success'))
             <p>Registration successful! Please log in.</p>
          @endif
 
-        
+
     </div>
 </body>
 </html>

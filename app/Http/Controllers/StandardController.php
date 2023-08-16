@@ -39,4 +39,11 @@ class StandardController extends Controller
         $standard->delete();
         return redirect()->route('standards.index')->with('success', 'Standard deleted successfully');
     }
+    public function viewStandards()
+    {
+    $role = session('role');
+    $standards = Standard::all(); // Assuming you have an Eloquent model for standards
+
+    return view('view_standards', compact('role', 'standards'));
+    }
 }

@@ -1,14 +1,19 @@
+/* Include your CSS rules here */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
+
+/* Header */
 header {
-    background-color: #333;
+    background-color: #608fdc;
     color: #fff;
     padding: 10px;
     text-align: center;
 }
+
+/* Navigation Sidebar */
 nav {
     background-color: #007bff;
     color: #fff;
@@ -18,21 +23,79 @@ nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex;
-    justify-content: center;
 }
 nav ul li {
-    margin-right: 20px;
+    margin-bottom: 15px;
 }
 nav ul li a {
     color: #fff;
     text-decoration: none;
+    display: block;
+    padding: 8px;
+    transition: background-color 0.3s;
 }
-main {
+nav ul li a:hover {
+    background-color: #0056b3;
+}
+
+/* Main Content Layout */
+.main-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    background-color: #333;
+    color: #fff;
+    flex: 1;
+    padding: 20px;
+
+}
+.sidebar ul {
+    padding: 0;
+    margin: 0;
+}
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+.sidebar ul li a:hover {
+    background-color: #222;
+}
+
+.content-container {
+    flex: 3;
     padding: 20px;
 }
+
+/* Footer */
+footer {
+    background-color: #608fdc;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0; /* Add this line to adjust the left margin */
+}
+footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+footer a:hover {
+    color: #007bff;
+}
+
+/* Additional Styles */
 h1 {
-    color: rgb(250, 250, 250);
+    color: #333;
     margin-bottom: 20px;
 }
 ul {
@@ -40,10 +103,10 @@ ul {
     padding: 0;
     margin-bottom: 20px;
 }
-li {
-    margin-bottom: 10px;
+.logout-message {
+    color: green;
+    font-weight: bold;
 }
-a {
-    color: #007bff;
-    text-decoration: none;
+.sidebar .dropdown.show {
+    display: block;
 }

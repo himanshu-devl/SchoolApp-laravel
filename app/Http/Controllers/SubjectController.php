@@ -12,7 +12,7 @@ class SubjectController extends Controller
         $subjects = Subject::all();
         return view('subjects.index', compact('subjects'));
     }
-    
+
 
     public function store(Request $request)
     {
@@ -43,5 +43,12 @@ class SubjectController extends Controller
         $standard->delete();
         return redirect()->route('subjects.index')->with('success', 'subject deleted successfully');
     }
+    public function viewSubjects()
+{
+    $role = session('role');
+    $subjects = Subject::all(); // Assuming you have an Eloquent model for subjects
+
+    return view('view_subjects', compact('role', 'subjects'));
+}
 
 }
