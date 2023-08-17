@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Events\UserRegistered;
+use Illuminate\Support\Facades\Hash;
+use App\Jobs\SendRegistrationEmailJob;
 
 class AccessController extends Controller
 {
@@ -14,11 +17,9 @@ class AccessController extends Controller
         $password = $request->input('password');
 
         // Use Eloquent to fetch the user based on the provided credentials
-        $user = User::where('username', $username)
-                    ->where('password', $password)
-                    ->first();
+        $user = User::where('username', $username)->first();
 
-        if ($user) {
+        if ($user && Hash::check($password, $user->password)) {
             // If the user is found, store user data in the session
             session(['user_id' => $user->id]);
             session(['username' => $user->username]);
@@ -35,17 +36,21 @@ class AccessController extends Controller
     public function register(Request $request)
     {
         $username = $request->input('username');
-        $password = $request->input('password');
+        $email = $request->input('email');
+        $password =bcrypt($request->input('password'));
         $role = $request->input('role');
 
         // Create a new User instance using Eloquent model
         $user = new User([
             'username' => $username,
+            'email'  => $email,
             'password' => $password,
             'role' => $role,
         ]);
 
-        if ($user->save()) {
+        if ($user->save())
+        {
+
             if ($role === 'student') {
 
                 $studentName = $request->input('name');
@@ -55,6 +60,7 @@ class AccessController extends Controller
                 ]);
                 $student->save();
             }
+            SendRegistrationEmailJob::dispatch($user);
             return redirect()->route('index')->with('registration_success', true);
         } else {
             return back()->with('registration_error', 'Error: Unable to register user.');

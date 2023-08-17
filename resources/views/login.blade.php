@@ -109,6 +109,8 @@
                 @csrf
                 <label for="new_username">New Username:</label>
                 <input type="text" id="new_username" name="username" required><br>
+                <label for="new_email">New Email:</label>
+                <input type="text" id="new_email" name="email" required><br>
                 <label for="new_password">New Password:</label>
                 <input type="password" id="new_password" name="password" required><br>
                 <label for="role">Role:</label>
