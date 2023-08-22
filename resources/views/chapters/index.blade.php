@@ -15,7 +15,9 @@
         </div>
     </div>
 
-    @if($chapters->count() > 0)
+    <div class="section">
+    <h2>Active Chapters</h2>
+    @if($activeChapters->count() > 0)
         <div class="section">
             <table>
                 <thead>
@@ -24,10 +26,11 @@
                         <th>Chapter</th>
                         <th>Update Data</th>
                         <th>Delete</th>
+                        <th>Active</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($chapters as $chapter)
+                    @foreach ($activeChapters as $chapter)
                         <tr>
                             <td>{{ $chapter->id }}</td>
                             <td>{{ $chapter->chapter }}</td>
@@ -46,6 +49,14 @@
                                     <button type="submit">Delete</button>
                                 </form>
                             </td>
+                            <td>
+                                <form action="{{ route('chapters.toggle', $chapter->id) }}" method="post">
+                                    @csrf
+                                    @method('patch')
+                                    <input type="hidden" name="active" value="{{ $chapter->active ? 1 : 0 }}">
+                                    <button type="submit">{{ $chapter->active ? 'Disable' : 'Enable' }}</button>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -53,9 +64,46 @@
         </div>
     @else
         <div class="section">
-            <p>No records found!</p>
+            <p>No active records found!</p>
         </div>
     @endif
+    </div>
+    <div class="section">
+        <h2>Inactive Chapters</h2>
+        @if($inactiveChapters->count() > 0)
+            <div class="section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Chapter</th>
+                            <th>Enable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($inactiveChapters as $chapter)
+                            <tr>
+                                <td>{{ $chapter->id }}</td>
+                                <td>{{ $chapter->chapter }}</td>
+                                <td>
+                                    <form action="{{ route('chapters.toggle', $chapter->id) }}" method="post">
+                                        @csrf
+                                        @method('patch')
+                                        <input type="hidden" name="active" value="{{ $chapter->active ? 1 : 0 }}">
+                                    <button type="submit">{{ $chapter->active ? 'Disable' : 'Enable' }}</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @else
+            <div class="section">
+                <p>No inactive records found!</p>
+            </div>
+        @endif
+    </div>
 
     <div class="container">
         <h1>Add Chapter</h1>

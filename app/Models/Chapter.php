@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Chapter extends Model
 {
     protected $table = 'chapters';
-    protected $fillable = ['chapter'];
+    protected $fillable = ['chapter','active'];
 
     public function subjects()
     {

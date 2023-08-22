@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Events\UserRegistered;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Jobs\SendRegistrationEmailJob;
 
@@ -13,20 +14,27 @@ class AccessController extends Controller
 {
     public function login(Request $request)
     {
-        $username = $request->input('username');
-        $password = $request->input('password');
+       $data = $request->validate([
+        'username' => 'required',
+        'password' => 'required'
+       ]);
 
         // Use Eloquent to fetch the user based on the provided credentials
-        $user = User::where('username', $username)->first();
+        $user = User::where('username', $request->username)->first();
 
-        if ($user && Hash::check($password, $user->password)) {
+
             // If the user is found, store user data in the session
-            session(['user_id' => $user->id]);
-            session(['username' => $user->username]);
-            session(['role' => $user->role]);
+            if(Auth::attempt($data)){
+                session(['user_id' => $user->id]);
+                session(['username' => $user->username]);
+                session(['role' => $user->role]);
 
-            return redirect()->route('dashboard');
-        } else {
+                return redirect()->route('dashboard');
+            }
+
+
+
+        else {
             // Handle login failure
             return redirect()->back()->with('login_error', 'Invalid credentials. Please try again.');
         }
@@ -37,7 +45,7 @@ class AccessController extends Controller
     {
         $username = $request->input('username');
         $email = $request->input('email');
-        $password =bcrypt($request->input('password'));
+        $password =Hash::make($request->input('password'));
         $role = $request->input('role');
 
         // Create a new User instance using Eloquent model

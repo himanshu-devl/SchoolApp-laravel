@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Chapter;
+use Illuminate\Http\Request;
+use App\Events\ChapterStatusChanged;
+use App\Jobs\NotifyChapterStatusChange;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class ChapterController extends Controller
 {
+
     public function index()
     {
-        $chapters = Chapter::all();
-        return view('chapters.index', compact('chapters'));
+        $activeChapters = Chapter::where('active', true)->get();
+        $inactiveChapters = Chapter::where('active', false)->get();
+
+        return view('chapters.index', compact('activeChapters', 'inactiveChapters'));
     }
 
     public function store(Request $request)
@@ -50,6 +57,28 @@ class ChapterController extends Controller
 
         return view('view_chapters', compact('role', 'chapters'));
     }
+    public function toggleChapterStatus(Request $request, $id)
+    {
+        $user = Auth::user();
+
+        $chapter = Chapter::findOrFail($id);
+        if ($request->active == 1) {
+            $status = 0;
+        } else {
+            $status = 1;
+        }
+
+        $chapter->update(['active' => $status]);
+
+
+        event(new ChapterStatusChanged($chapter ,$user));
+
+
+        
+
+
+        return redirect()->route('chapters.index');
+     }
 
 
 }
