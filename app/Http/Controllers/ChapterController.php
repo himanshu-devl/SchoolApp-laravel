@@ -74,7 +74,7 @@ class ChapterController extends Controller
         event(new ChapterStatusChanged($chapter ,$user));
 
 
-        
+
 
 
         return redirect()->route('chapters.index');

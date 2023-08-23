@@ -5,11 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'School Management System')</title>
     <link rel="stylesheet" href="{{ asset('style.css') }}">
+    <style>
+        .user-profile {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .user-profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+}
+
+
+    </style>
+
 </head>
 <body>
     <header>
         <h1>School Management System</h1>
         <p>Welcome {{ session('username') }}! You are {{ session('role') }} | <a href="{{ route('logout') }}">Logout</a></p>
+        <div class="user-profile">
+            <img src="{{ asset('storage/user_images/' . session('image')) }}" alt="{{ session('username') }} Profile Image" >
+        </div>
     </header>
     <div class="main-container">
         <nav class="sidebar">
@@ -21,6 +40,9 @@
                     <li><a href="{{ route('assign_chapters') }}">Assign Chapters</a></li>
                     <li><a href="{{ route('assign_subjects') }}">Assign Subjects</a></li>
                     <li><a href="{{ route('assign_students') }}">Assign Students</a></li>
+                    <li><a href="{{ route('users.create') }}">Add User</a></li>
+                    <li><a href="{{ route('users.index') }}">List Users</a></li>
+
                 @elseif (session('role') === 'teacher')
                     <li><a href="{{ route('subjects.index') }}">Subjects</a></li>
                     <li><a href="{{ route('chapters.index') }}">Chapters</a></li>

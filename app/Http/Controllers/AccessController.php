@@ -25,9 +25,11 @@ class AccessController extends Controller
 
             // If the user is found, store user data in the session
             if(Auth::attempt($data)){
+
                 session(['user_id' => $user->id]);
                 session(['username' => $user->username]);
                 session(['role' => $user->role]);
+                session(['image' => $user->image]);
 
                 return redirect()->route('dashboard');
             }

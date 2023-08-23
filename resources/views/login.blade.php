@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Login</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,6 +29,23 @@
             display: block;
             margin-bottom: 5px;
         }
+        .btn-google {
+            background-color: #4285f4;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-google:hover {
+             background-color: #357ae8;
+         }
 
         input[type="text"],
         input[type="password"],
@@ -71,6 +89,7 @@
 
         #register-button:hover {
             background-color: #2980b9;
+
         }
     </style>
     <script>
@@ -98,7 +117,10 @@
             <input type="text" id="username" name="username" required><br>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required><br>
-            <input type="submit" value="Login">
+            <input type="submit" value="Login"><br>
+            <a href="{{ route('google.login') }}" class="btn btn-google btn-user btn-block">
+                <i class="fab fa-google fa-fw"></i> Login with Google
+            </a>
         </form>
 
         <button id="register-button" onclick="toggleRegistrationForm()">Register</button>

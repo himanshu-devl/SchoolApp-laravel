@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AccessController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\StandardController;
@@ -27,11 +29,21 @@ Route::post('/login', [AccessController::class, 'login'])->name('login.submit');
 
 Route::post('/register', [AccessController::class, 'register'])->name('register.submit');
 
+Route::prefix('google')->name('google.')->group( function(){
+    Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');
+    Route::any('callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
+});
+
+
+
+
+
 
 // Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function(){
         return view('dashboard');
     })->name('dashboard');
+
     Route::get('/logout', [AccessController::class, 'logout'])->name('logout');
 Route::get('/subjects', [SubjectController::class, 'index'])->name('subjects.index')->middleware('auth');
 Route::post('/subjects', [SubjectController::class,'store'])->name('subjects.store')->middleware('auth');
@@ -49,6 +61,10 @@ Route::get('/standards', [StandardController::class, 'index'])->name('standards.
 Route::post('/standards', [StandardController::class, 'store'])->name('standards.store')->middleware('auth');
 Route::post('/standards/edit/{id}', [StandardController::class, 'update'])->name('standards.update')->middleware('auth');
 Route::post('/standards/delete/{id}', [StandardController::class, 'destroy'])->name('standards.destroy')->middleware('auth');
+
+Route::get('/users/create',[UserController::class, 'create'])->name('users.create');
+Route::get('/users/index',[UserController::class, 'index'])->name('users.index');
+Route::post('/users/store', [UserController::class, 'store'])->name('add.user');
 
 
 Route::get('/assign_chapters', [AssignChapterController::class, 'index'])->name('assign_chapters')->middleware('auth');

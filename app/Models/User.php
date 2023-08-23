@@ -13,5 +13,5 @@ class User extends Model implements Authenticatable
 
     protected $table = 'users';
 
-    protected $fillable = ['username', 'email','password', 'role'];
+    protected $fillable = ['username', 'email','password', 'role','image'];
 }
