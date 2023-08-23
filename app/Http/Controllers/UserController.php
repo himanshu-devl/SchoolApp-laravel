@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Session\Session;
 
 class UserController extends Controller
 {
@@ -71,24 +72,45 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $image = $request->file('image');
+
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/user_images', $imageName);
+        } else {
+            $imageName = null;
+        }
+
+        $user = User::findOrFail($user->id);
+        $user->update([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' =>Hash::make($request->password),
+            'role' => $request->role,
+            'image' => $imageName
+        ]);
+        session(['image' => $user->image]);
+
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
 }

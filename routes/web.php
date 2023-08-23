@@ -62,9 +62,15 @@ Route::post('/standards', [StandardController::class, 'store'])->name('standards
 Route::post('/standards/edit/{id}', [StandardController::class, 'update'])->name('standards.update')->middleware('auth');
 Route::post('/standards/delete/{id}', [StandardController::class, 'destroy'])->name('standards.destroy')->middleware('auth');
 
+
+
 Route::get('/users/create',[UserController::class, 'create'])->name('users.create');
 Route::get('/users/index',[UserController::class, 'index'])->name('users.index');
 Route::post('/users/store', [UserController::class, 'store'])->name('add.user');
+Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.delete');
+
 
 
 Route::get('/assign_chapters', [AssignChapterController::class, 'index'])->name('assign_chapters')->middleware('auth');

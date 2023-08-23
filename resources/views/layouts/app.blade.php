@@ -20,6 +20,7 @@
 
 
     </style>
+    <link href="{{ asset('css/user-edit.css') }}" rel="stylesheet">
 
 </head>
 <body>
